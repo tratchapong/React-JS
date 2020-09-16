@@ -15,11 +15,9 @@
       background: #999;
     }
 
-    #root {
-      display: flex;  
-      flex-flow: row wrap;
+    .app {
+      display: flex; 
       justify-content: center;
-      
     }
   </style>
 </head>
@@ -48,7 +46,7 @@
     }
 
     function App() {
-      return React.createElement("div", {}, [
+      return React.createElement("div", {class : "app"}, [
         React.createElement(Card, {title:"Harry", color: "deeppink", img: "https://unsplash.it/id/1027/200"}),
         React.createElement(Card, {title:"Ron", color: "tomato", img: "https://unsplash.it/id/349/200"}),
       ])
