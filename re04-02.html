@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super simple React 04</title>
+</head>
+<body>
+  <div id="root">Render Here</div>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>  
+  <script>
+    function Card(props) {
+      let st1 = {
+        color: "white",
+        background: "blue",
+        width: "50%" ,
+        margin: "auto"
+      }
+
+      return React.createElement("div", {style : st1}, [
+        React.createElement("h1", {}, "Card Title"),
+        React.createElement("h3", {}, "Welcome to react"),
+        React.createElement("img", {src: props.img}),
+        React.createElement("p", {}, "While my guitar is gently weep"),
+        ])
+    }
+
+    function App() {
+      return React.createElement("div", {}, [
+        React.createElement(Card, {img: "https://source.unsplash.com/random/200x200"}),
+        React.createElement(Card, {img: "https://source.unsplash.com/random/200x200"}),
+      ])
+    }
+
+    ReactDOM.render(React.createElement(App), document.getElementById("root"))
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>Super simple React 05</title>
+  <style>
+    * {
+      margin: 0px;
+      padding:0px;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #999;
+    }
+
+    #root {
+      display: flex;  
+      flex-flow: row wrap;
+      justify-content: center;
+      
+    }
+  </style>
+</head>
+<body>
+  <div id="root">Render Here</div>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>  
+  <script>
+    function Card(props) {
+      let st1 = {
+        display: "flex",
+        flexFlow: "column",
+        justifyContent: "space-around",
+        alignItems: "center",
+        color: "white",
+        background: props.color,
+        width: "300px" ,
+        height: "300px",
+        margin: "10px auto"
+      }
+
+      return React.createElement("div", {style : st1}, [
+        React.createElement("h1", {}, props.title),
+        React.createElement("img", {src: props.img}),
+        ])
+    }
+
+    function App() {
+      return React.createElement("div", {}, [
+        React.createElement(Card, {title:"Harry", color: "deeppink", img: "https://unsplash.it/id/1027/200"}),
+        React.createElement(Card, {title:"Ron", color: "tomato", img: "https://unsplash.it/id/349/200"}),
+      ])
+    }
+
+    ReactDOM.render(React.createElement(App), document.getElementById("root"))
+  </script>
+</body>
+</html>
