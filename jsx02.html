@@ -15,9 +15,28 @@
   <div id="root"></div>
 
   <script type="text/babel">
+    class Counter extends React.Component {
+    render() {
+      return (
+        <div>
+          <h3>I am a Counter</h3>
+          <p>{Math.random()}</p>
+        </div>
+      )
+    }
+  }
+
+  class Banner extends React.Component {
+    render() {
+      return(
+        <div className="Banner">
+        <h3>BANNER BANNER</h3>
+        </div>
+      )
+    }
+  }
+
   function Cart(props) {
-    // let color = (this.previousElementSibling.style.color == "silver") ? "tomato" : "silver"
-    
     let st1 = {
       margin : "10px",
       border : "1px dashed blue",
@@ -29,19 +48,21 @@
       <h1>Subject : { props.title }</h1>
       <h3>Description : blah...</h3>
       <p>Price = {props.price}</p>
+      <button>Add to Cart</button>
       </div>
     )
   }
 
   function App() {
-      // console.log(document.querySelectorAll('.myCart'))
     return (
-      <div>
+      <>
         <h1>Hello World</h1>
-        <h3>Today is {Date()}</h3>
+        <h3>Today is <u> {new Date().toDateString()} </u></h3>
+        <Banner />
         <Cart title="HTML" price="1000" color="silver"/>
         <Cart title="CSS" price="2000" color="tomato"/>
-      </div>
+        <Banner />
+      </>
     )
   }
   
