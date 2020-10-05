@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+    class Movielist extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        let st_ul = {
+          listStyle : "none"
+        }
+        return(
+          <ul style={st_ul}>
+            {this.props.movies.map( (m,i) => {
+              return (
+                <li key={i}> <input type="checkbox" name="like" id="" /> {m.toUpperCase()} </li>
+                )
+            })}
+            <li></li>
+          </ul>
+        )
+      }
+    }
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          text: '',
+          movies : [
+            "God Fathers",
+            "Star wars",
+            "Forest Gumps",
+            "Contact",
+            "What dream may come",
+            "Butterfly effects"
+          ]
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+      }
+
+      handleChange(e) {
+        if(e.target.value === "abc") 
+          this.setState( { text : "XYZ"})
+        this.setState( { text : e.target.value} )
+        console.log( this.state.text )
+      }
+
+      handleSubmit(e) {
+        e.preventDefault()
+        const newItem = this.state.text
+        this.setState( { movies : this.state.movies.concat(newItem) })
+        this.setState( { text : '' })
+
+        // this.setState( state => ({
+        //    text : '',
+        //    movies : state.movies.concat(newItem)
+        //    })
+        // )
+
+        // console.log(this.state.movies.concat(newItem))
+
+      }
+
+      render() {
+      return(
+      <>
+        <Movielist movies = {this.state.movies} />
+        <form onSubmit={this.handleSubmit}>
+          
+          <input type="text" placeholder="Add Movies" onChange={this.handleChange}></input>
+          <button>Add</button>
+        
+        </form>
+
+      </>
+      )
+    }
+  }
+      ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </body>
+</html>
