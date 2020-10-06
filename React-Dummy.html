@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+
+class BrokenButton extends React.Component {
+  render() {
+    return (
+      <>
+      <button onClick={this.setRed} style={this.state}>
+        Set Red
+      </button>
+      <button onClick={ () => {
+        this.setState({ backgroundColor:'green'})
+        console.dir(this)
+       }} style={this.state}
+       >
+        Set Green
+      </button>
+      <button onClick={this.setBlue} style={this.state}>
+        Set Blue
+        </button>
+      </>
+    )
+  }
+
+  setRed() {
+    console.dir(this)
+    this.setState({ backgroundColor: 'red' })
+  }
+
+  setBlue = () => {
+    console.dir(this)
+    this.setState({ backgroundColor: 'blue'})
+  }
+}
+
+ReactDOM.render(
+  <BrokenButton />,
+  document.getElementById('root')
+)
+      // ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </body>
+</html>
