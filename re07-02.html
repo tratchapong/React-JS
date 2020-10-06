@@ -23,7 +23,7 @@
           <ul style={st_ul}>
             {this.props.movies.map( (m,i) => {
               return (
-                <li key={i}> <input type="checkbox" name="like" id="" /> {m.toUpperCase()} </li>
+                <li key={i}> {m.title.toUpperCase()} , Star : {m.star}</li>
                 )
             })}
             <li></li>
@@ -36,30 +36,37 @@
       constructor(props) {
         super(props)
         this.state = {
-          text: '',
+          in1 : '',
+          in2 : 0,
           movies : [
-            "God Fathers",
-            "Star wars",
-            "Forest Gumps",
-            "Contact",
-            "What dream may come",
-            "Butterfly effects"
+            { title : "God Fathers", star : 5 },
+            { title : "Star wars", star : 4 },
+            { title : "Forest Gumps", star : 5},
+            { title : "Contact", star : 5},
+            { title : "What dream may come", star : 4},
+            { title : "Butterfly effects", star : 3},
           ]
         }
-        // this.handleChange = this.handleChange.bind(this)
-        // this.handleSubmit = this.handleSubmit.bind(this)
       }
 
       handleChange = (e) => {
-        this.setState( { text : e.target.value} )
-        console.log( this.state.text )
+        switch (e.target.id) {
+          case 'title' :  
+            this.setState( { in1 : e.target.value} )
+            break
+          case 'star' : 
+            this.setState( { in2 : e.target.value} )
+            break
+        }
+        console.log( this.state.in1, this.state.in2 )
       }
 
       handleSubmit = (e) => {
         e.preventDefault()
-        const newItem = this.state.text
+        const newItem = { title: this.state.in1, star: this.state.in2 }
         this.setState( { movies : this.state.movies.concat(newItem) })
-        this.setState( { text : '' })
+        this.setState( { })
+        this.setState( { in1 : '', in2: '' })
 
       }
 
@@ -70,10 +77,18 @@
         <form onSubmit={this.handleSubmit}>
           
           <input 
-            type="text" 
+            type="text"
+            id="title" 
             placeholder="Add Movies"
             onChange={this.handleChange}
-            value={this.state.text}>
+            value={this.state.in1}>
+          </input>
+          <input 
+            type="text" 
+            id="star"
+            placeholder="1 - 5 Stars"
+            onChange={this.handleChange}
+            value={this.state.in2}>
           </input>
           <button>Add</button>
         
