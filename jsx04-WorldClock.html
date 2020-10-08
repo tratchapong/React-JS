@@ -15,6 +15,7 @@
 class Clock extends React.Component {
   constructor(props) {
     super(props);
+
      this.timeZone = {
         Bangkok : 0,
         Japan : 2,
@@ -50,8 +51,12 @@ class Clock extends React.Component {
   }
 
   render() {
+    // this.interval = setInterval(() => this.updateTime(), 1000);
     return (
-      <div className= {this.props.cn} style={{width:"80%", textAlign:"center", margin:"20px auto", padding:"20px"}}>
+      <div 
+        className= {this.props.cn} 
+        style={{width:"80%", textAlign:"center", margin:"20px auto", padding:"20px"}}
+        >
         <h1> {this.props.location} </h1>
         <h1> {this.padZero(this.state.hours)} : {this.padZero(this.state.minutes)}: {this.padZero(this.state.seconds)} </h1>
       </div>
@@ -59,16 +64,35 @@ class Clock extends React.Component {
   }
 }  
 
-    class App extends React.Component {
-      render() {
-        return (
-          <>
-          <h1 className="jumbotron" style={{ textAlign: "center",fontSize: "80px"}}> World Clock </h1>
-          <Clock location="Bangkok" cn="clock jumbotron bg-primary text-white" />
-          <Clock location="Japan" cn="clock jumbotron bg-success text-white"/>
-          <Clock location="London" cn="clock jumbotron bg-dark text-white"/>
-          </>
-        )}}
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      location : 'Bangkok'
+    }
+    this.location = 'Bangkok'
+    this.changeLocation = this.changeLocation.bind(this)
+  }
+  
+  changeLocation(e) {
+    // alert('changeLocation call')
+    this.location = prompt("Enter new Location : ")
+    this.setState ( {location : this.location } )
+    console.log(this.state.location)
+  }
+
+  render() {
+    return (
+      <>
+      <h1 className="jumbotron" style={{ padding: "10px", textAlign: "center",fontSize: "70px"}}> World Clock </h1>
+      <Clock location={this.location} cn="clock jumbotron bg-primary text-white" /> 
+      <div style= {{ width:"100%", display:"flex", justifyContent:"center"}}>
+      <button className="btn btn-danger" onClick = {this.changeLocation}>Change Location</button>
+      </div>
+      <Clock location="Japan" cn="clock jumbotron bg-success text-white"/>
+      <Clock location="London" cn="clock jumbotron bg-dark text-white"/>
+      </>
+    )}}
 
       ReactDOM.render(
         <App />,
