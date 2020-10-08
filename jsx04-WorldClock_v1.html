@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+     this.timeZone = {
+        Bangkok : 0,
+        Japan : 2,
+        London : 6,
+      }
+      // https://www.timeanddate.com/worldclock/
+    this.state = { 
+      hours:0,
+      minutes:0,
+      seconds:0 };
+  }
+
+  updateTime() {
+    const currentTime = new Date()
+    this.setState(state => ({
+      hours: currentTime.getHours() + this.timeZone[this.props.location],
+      minutes: currentTime.getMinutes(),
+      seconds: currentTime.getSeconds()
+    }));
+    // console.log(this.timeZone['Bangkok'])
+  }
+
+  padZero(x) {
+    return ("00"+x).slice(-2)
+  }
+  
+  componentDidMount() {
+    this.interval = setInterval(() => this.updateTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    return (
+      <div className= {this.props.cn} style={{width:"80%", textAlign:"center", margin:"20px auto", padding:"20px"}}>
+        <h1> {this.props.location} </h1>
+        <h1> {this.padZero(this.state.hours)} : {this.padZero(this.state.minutes)}: {this.padZero(this.state.seconds)} </h1>
+      </div>
+    );
+  }
+}  
+
+    class App extends React.Component {
+      render() {
+        return (
+          <>
+          <h1 className="jumbotron" style={{ textAlign: "center",fontSize: "80px"}}> World Clock </h1>
+          <Clock location="Bangkok" cn="clock jumbotron bg-primary text-white" />
+          <Clock location="Japan" cn="clock jumbotron bg-success text-white"/>
+          <Clock location="London" cn="clock jumbotron bg-dark text-white"/>
+          </>
+        )}}
+
+      ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+      )
+
+    </script>
+
+  </body>
+</html>
