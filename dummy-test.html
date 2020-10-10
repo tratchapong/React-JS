@@ -2,43 +2,79 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>React Playground</title>
+    <title>React Playground : World Clock</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
     <div id="root"></div>
     
-    <script type="text/babel">
+<script type="text/babel">
 
-    function App() {
-      return(
-      // JSX Code here
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.timezone = this.props.timezone
+    this.state = { 
+      date : new Date().toLocaleString("TH", {timeZone: this.props.timezone})
+     }
+    //  this.updateTime = this.updateTime.bind(this)
+  }
+
+  updateTime = () => {
+    // console.dir(this)
+    let d = new Date().toLocaleString("TH", {timeZone: this.props.timezone})
+    this.setState(
+      { date : d }
+    )
+  }
+
+  componentDidMount() {
+    this.interval = setInterval( this.updateTime, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() { 
+    return ( 
+        <div className="clock">
+          <h1>{this.props.timezone}</h1>
+          <h1>{this.state.date}</h1>
+        </div>
+     );
+  }
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      timezone : "Asia/Bangkok"
+     }
+    this.changeTimezone = this.changeTimezone.bind(this)
+  }
+
+  changeTimezone(e) {
+    this.setState({timezone : e.target.value})
+  }
+
+  render() { 
+    return ( 
       <>
-        <h1>Example heading <span className="badge bg-secondary">New</span></h1>
-        <h2>Example heading <span className="badge bg-secondary">New</span></h2>
-        <h3>Example heading <span className="badge bg-secondary">New</span></h3>
-        <h4>Example heading <span className="badge bg-secondary">New</span></h4>
-        <h5>Example heading <span className="badge bg-secondary">New</span></h5>
-        <h6>Example heading <span className="badge bg-secondary">New</span></h6>
-
-        <button type="button" className="btn btn-primary">Primary</button>
-        <button type="button" className="btn btn-secondary">Secondary</button>
-        <button type="button" className="btn btn-success">Success</button>
-        <button type="button" className="btn btn-danger">Danger</button>
-        <button type="button" className="btn btn-warning">Warning</button>
-        <button type="button" className="btn btn-info">Info</button>
-        <button type="button" className="btn btn-light">Light</button>
-        <button type="button" className="btn btn-dark">Dark</button>
-        <button type="button" className="btn btn-link">Link</button>
-
-
+        <Clock timezone={this.state.timezone}/>
+        <select name="timezone" onChange={this.changeTimezone} width="30">
+          <option value="Asia/Bangkok">Asia/Bangkok</option>
+          <option value="Europe/London">Europe/London</option>
+          <option value="Asia/Tokyo">Asia/Tokyo</option>
+        </select>
       </>
-      )
-    }
+     );
+  }
+}
       ReactDOM.render(<App />, document.querySelector('#root'))
-    </script>
+</script>
   </body>
 </html>

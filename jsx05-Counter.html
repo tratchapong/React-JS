@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSX05-Counter by Hook</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    .break {
+      flex-basis: 100%;
+      height: 0;
+    }
+    button {
+      margin: 0 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+  
+  const App = () => {
+    const [data, setdata] = React.useState( {counter:0} )
+
+    const plusHandler = () => {
+      setdata({ counter: data.counter+1})
+    }
+
+    const minusHandler = () => {
+      setdata({ counter: data.counter-1})
+    }
+    const resetHandler = () => {
+      setdata( { counter : 0})
+    }
+
+    return(
+      <div style={{display:'flex', justifyContent:'center', flexWrap:'wrap' }}>
+        <h1 style={{outline:'1px dashed lime', padding:'3px 40px'}}>{data.counter}</h1>
+        <div class="break"></div>
+        <button onClick={minusHandler}>-</button>
+        <button onClick={resetHandler}>Reset</button>
+        <button onClick={plusHandler}>+</button>
+      </div>
+    )
+  }
+
+  ReactDOM.render(<App />, document.querySelector('#root'))
+
+  </script>
+</body>
+</html>
