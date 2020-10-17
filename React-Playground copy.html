@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World</title>
+    <title>React Playground...</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -16,7 +16,12 @@
         constructor(props) {
           super(props)
           this.state = {
-            // state variables //
+            songs : [
+              { id: 1, songName : 'Battle of evenmore' },
+              { id: 2, songName : 'Highway Stars' },
+              { id: 3, songName : 'Smoke on the water' },
+              { id: 4, songName : 'Child in Time' }
+            ]
           }
         }
         render() {
@@ -24,6 +29,16 @@
         }
 
       }
+
+      class Child extends React.Component {
+        constructor(props) {
+          super(props)
+        }
+        render() {
+          
+        }
+      }
+
 
       ReactDOM.render(<App />, document.querySelector('#root'))
     </script>
