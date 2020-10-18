@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Playground...</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+
+      class App extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = {
+            songs : [
+              { id: 1, songName : 'Battle of evenmore' },
+              { id: 2, songName : 'Highway Stars' },
+              { id: 3, songName : 'Smoke on the water' },
+              { id: 4, songName : 'Child in Time' }
+            ]
+          }
+          this.st1 = { color:"red", background:"coral"}
+          this.st2 = { color:"lime", background:"silver"}
+        }
+
+        handleDoubleClick = (e) => {
+          console.log(e.target.getAttribute('style'))
+          console.log(e.target.getAttribute('readOnly'))
+          if (!e.target.getAttribute('readOnly'))
+            e.target.setAttribute('readOnly','true')
+          else
+            e.target.removeAttribute('readOnly')
+        }
+
+        handleChange = (e) => {
+          // console.log(e.target.getAttribute('readOnly'))
+        }
+
+        render() {
+          
+          return(
+            <>
+              {this.state.songs.map( x => {
+                return  ( 
+                  (+x.id % 2 == 0)?
+                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} style={this.st1} />
+                  :
+                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} style={this.st2} />
+
+                )
+              })}
+            </>
+          )
+        }
+      }
+
+
+      ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </bo
