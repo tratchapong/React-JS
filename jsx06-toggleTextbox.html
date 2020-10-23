@@ -23,17 +23,20 @@
               { id: 4, songName : 'Child in Time' }
             ]
           }
-          this.st1 = { color:"red", background:"coral"}
+          this.st1 = { color:"red", background:"pink"}
           this.st2 = { color:"lime", background:"silver"}
         }
 
         handleDoubleClick = (e) => {
-          console.log(e.target.getAttribute('style'))
-          console.log(e.target.getAttribute('readOnly'))
-          if (!e.target.getAttribute('readOnly'))
+          // console.log(e.target.hasAttribute('readOnly'))
+          if (!e.target.getAttribute('readOnly')) {
             e.target.setAttribute('readOnly','true')
-          else
+            e.target.setAttribute('style','color:red; background:pink')
+          }
+          else {
             e.target.removeAttribute('readOnly')
+            e.target.setAttribute('style','background:white')
+          }
         }
 
         handleChange = (e) => {
@@ -47,9 +50,9 @@
               {this.state.songs.map( x => {
                 return  ( 
                   (+x.id % 2 == 0)?
-                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} style={this.st1} />
+                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} readOnly={true} style={this.st1}/>
                   :
-                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} style={this.st2} />
+                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} readOnly={true} style={this.st1}/>
 
                 )
               })}
