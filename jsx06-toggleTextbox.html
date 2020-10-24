@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>React Playground...</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <meta charset="UTF-8" />
+  <title>React Playground...</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      #root {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      input {
+        display : block;
+        margin : 3px 3px;
+        padding : 7px;
+        border : none;
+        font-size: large;
+      }
+      .break {
+        flex-basis: 100%;
+        height: 0px;
+      }
+      
+    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -17,51 +36,75 @@
           super(props)
           this.state = {
             songs : [
-              { id: 1, songName : 'Battle of evenmore' },
-              { id: 2, songName : 'Highway Stars' },
-              { id: 3, songName : 'Smoke on the water' },
-              { id: 4, songName : 'Child in Time' }
+              { id: 1, songName : 'Battle of evenmore',isReadonly: true },
+              { id: 2, songName : 'Highway Stars',isReadonly: true },
+              { id: 3, songName : 'Smoke on the water',isReadonly: true },
+              { id: 4, songName : 'Child in Time',isReadonly: true }
             ]
           }
           this.st1 = { color:"red", background:"pink"}
-          this.st2 = { color:"lime", background:"silver"}
+          this.st2 = { color:"white", background:"blue"}
         }
 
-        handleDoubleClick = (e) => {
-          // console.log(e.target.hasAttribute('readOnly'))
-          if (!e.target.getAttribute('readOnly')) {
-            e.target.setAttribute('readOnly','true')
-            e.target.setAttribute('style','color:red; background:pink')
-          }
-          else {
-            e.target.removeAttribute('readOnly')
-            e.target.setAttribute('style','background:white')
-          }
-        }
+        // handleDoubleClick = (e) => {
+        //   console.log(e.target.hasAttribute('readOnly'))
+        //   if (!e.target.getAttribute('readOnly')) {
+        //     e.target.setAttribute('readOnly','true')
+        //     e.target.setAttribute('style','color:red; background:pink')
+        //   }
+        //   else {
+        //     e.target.removeAttribute('readOnly')
+        //     e.target.setAttribute('style','background:white')
+        //   }
+        // }
 
-        handleChange = (e) => {
-          // console.log(e.target.getAttribute('readOnly'))
+        handleChange = (id => (e) => {
+          const replace_songs = [...this.state.songs]
+          let idx = this.state.songs.findIndex( x=> x.id === id )
+          replace_songs[idx].songName = e.target.value 
+          // this.setState( state => ({
+          //   songs : replace_songs
+          // }))
+          this.setState( {songs : replace_songs})
+        })
+
+        toggleInput = (id) => () => {
+          const replace_songs = [...this.state.songs]
+          let idx = this.state.songs.findIndex( x=> x.id === id )
+          replace_songs[idx].isReadonly = !replace_songs[idx].isReadonly
+          this.setState( state => ({
+            songs : replace_songs
+          }))
         }
 
         render() {
           
           return(
             <>
-              {this.state.songs.map( x => {
-                return  ( 
-                  (+x.id % 2 == 0)?
-                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} readOnly={true} style={this.st1}/>
+              {this.state.songs.map( x => (
+                <>
+                  { (x.isReadonly===true)
+                  ? 
+                  <>
+                  <input key={x.id} defaultValue={x.songName} onChange={this.handleChange} readOnly={x.isReadonly} style={this.st1}/>
+                  <button onClick= {this.toggleInput(x.id)}>Edit</button>
+                  </>
                   :
-                  <input key={x.id} defaultValue={x.songName} onDoubleClick={this.handleDoubleClick} onChange={this.handleChange} readOnly={true} style={this.st1}/>
-
+                  <>
+                  <input key={x.id} defaultValue={x.songName} onChange={this.handleChange(x.id)} readOnly={x.isReadonly} style={this.st2}/>
+                  <button onClick= {this.toggleInput(x.id)}>Done</button>
+                  </>
+                  }
+                  <div className="break"> </div>
+                </>
                 )
-              })}
+              )}
             </>
           )
         }
       }
 
-
       ReactDOM.render(<App />, document.querySelector('#root'))
     </script>
-  </bo
+  </body>
+  </html>
