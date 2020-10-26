@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Render Props Example...</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+    // resource : https://www.youtube.com/watch?v=EZil2OTyB4w 
+
+      class App extends React.Component {
+
+        render() {
+          return (
+            <div style={{display: "flex"}}>
+              <Random render={ (getRandom) => (
+                <Redbox render={getRandom} />
+              ) } />
+              <Random render={ (getRandom) => (
+                <Bluebox render={getRandom} />
+              )} />
+            </div>
+          )
+        }
+      }
+
+      class Redbox extends React.Component {
+        
+        st1 = { display: "flex", justifyContent: "center"}
+        st2 = { color: "white", background: "red", width: "100px", height: "100px" }
+        st3 = { fontSize: "80px", margin: "5px"}
+        
+        render() {
+          return (
+            <div style={ {...this.st1, ...this.st2, ...this.st3} }>
+              {this.props.render(10,99)}
+              </div>
+              )
+            }
+          }
+          
+      class Bluebox extends React.Component {
+        st1 = { display: "flex", justifyContent: "center", alignItems: "center"}
+        st2 = { color: "white", background: "blue", width: "150px", height: "150px" ,borderRadius: "50%"}
+        st3 = { fontSize: "80px", margin: "5px"}
+            
+        render() { 
+          return ( 
+            <div style= { {...this.st1, ...this.st2, ...this.st3} }>
+              {this.props.render(100,999)}
+            </div>
+           )
+        }
+      }
+       
+      class Random extends React.Component {
+        
+        getRandom(min, max) {
+          return Math.floor(Math.random() * (max - min + 1) ) + min
+        }
+
+        render() { 
+          return (
+            <>
+              {  this.props.render(this.getRandom) }
+            </>
+            )
+        }
+      }
+
+      ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </body>
+</html>
