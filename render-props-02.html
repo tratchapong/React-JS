@@ -19,7 +19,7 @@
           return (
             <div style={{display: "flex"}}>
               <Random render={ (getRandom) => (
-                <Redbox render={getRandom} />
+                <Redbox getRandom={getRandom} />
               )} />
               <Random render={ (getRandom) => (
                 <Bluebox render={getRandom} />
@@ -39,9 +39,10 @@
         st3 = { fontSize: "80px", margin: "5px"}
         
         render() {
+          const {getRandom} = this.props
           return (
             <div style={ {...this.st1, ...this.st2, ...this.st3} }>
-              {this.props.render(10,99)}
+              {this.props.getRandom(10,99)}
             </div>
               )
             }
