@@ -20,9 +20,12 @@
             <div style={{display: "flex"}}>
               <Random render={ (getRandom) => (
                 <Redbox render={getRandom} />
-              ) } />
+              )} />
               <Random render={ (getRandom) => (
                 <Bluebox render={getRandom} />
+              )} />
+              <Counter render={ (count, incrementCounter) => (
+                <Counterbox count={count} incrementCounter={incrementCounter} />
               )} />
             </div>
           )
@@ -39,7 +42,7 @@
           return (
             <div style={ {...this.st1, ...this.st2, ...this.st3} }>
               {this.props.render(10,99)}
-              </div>
+            </div>
               )
             }
           }
@@ -73,6 +76,39 @@
         }
       }
 
+      class Counterbox extends React.Component {
+        st1 = { display: "flex", justifyContent: "center", alignItems: "center"}
+        st2 = { color: "pink", background: "coral", width: "150px", height: "150px" }
+        st3 = { fontSize: "80px", margin: "15px"}
+        render() { 
+          const { count, incrementCounter } = this.props
+          return ( 
+            <div style={{...this.st1, ...this.st2, ...this.st3}} onClick={incrementCounter} > 
+              {count}
+            </div>
+           )
+        }
+      }
+
+      class Counter extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = { count: 0 }
+        }
+
+        incrementCounter = () => {
+          this.setState( state => { return {count : state.count + 1} })
+        }
+        
+        render() { 
+          return ( 
+            <>
+              { this.props.render(this.state.count, this.incrementCounter)}
+            </>
+           );
+        }
+      }
+       
       ReactDOM.render(<App />, document.querySelector('#root'))
     </script>
   </body>
