@@ -1,0 +1,95 @@
+<!-- resource  -->
+<!-- https://dev.to/narendersaini32/how-to-create-load-more-logic-in-react-474m -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Playground</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .img-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .img-box {
+        height: 200px;
+        flex-basis: 30%;
+        margin: 10px;
+        /* border: 3px inset tomato; */
+        box-shadow: 9px 6px 12px 0px rgba(102,102,102,0.63);
+        border-radius: 10px;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        max-height: 90%;
+        margin: 5px auto;
+        border-radius: 10px;
+        box-shadow: 9px 6px 12px 0px rgba(102,102,102,0.63);
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+  <script type="text/babel">
+    const length = 100
+    const data = [...Array(length).keys()]
+    // const img_src = "https://source.unsplash.com/random"
+    const img_src = "https://picsum.photos/seed/"
+    const limit = 3
+    
+    function App() {
+      const [showMore, setShowMore] = React.useState(true)
+      const [list, setList] = React.useState(data.slice(0,limit))
+      const [index, setIndex] = React.useState(limit)
+      const endPage = React.useRef(null)
+
+      const loadMore = () => {
+       const newIndex = index + limit
+       const newShowMore = newIndex < (length-1)
+       const newList = list.concat(data.slice(index,newIndex))
+       setIndex(newIndex)
+       setShowMore(newShowMore)
+       setList(newList)
+      }
+      
+       const scrollToEnd = () => {
+         endPage.current.scrollIntoView({ behavior: "smooth"})
+       }
+       
+       React.useEffect(scrollToEnd,[list])
+
+      return (
+      <>
+        <h1>Pictures from : <span className="badge bg-primary text-light">{img_src}</span></h1>
+        <div className="img-container">
+          { list.map( (x, i)=> (
+            <div key={i} className="img-box">
+              <img src={ `${img_src}/${i+1}/200` } alt="random"/>
+            </div>
+            ) ) 
+          }
+        <button 
+          className="btn btn-primary"
+          onClick={loadMore}   
+        >
+        Load more..</button>
+        </div>
+        <footer ref={endPage}><hr /></footer>
+      </>
+      )
+    }
+      ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </body>
+</html>
