@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Playground</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+
+
+    const ChildComponent= (props) => {
+      return (
+        < div style={{ background: 'silver', padding: '10px'}} >
+          <h4>This is child Component</h4>
+            {props.children}
+        </ div>
+      )
+    }
+
+    const ParentComponent= () => {
+      return (
+      <div style={{ background:'salmon', padding:'10px', width:'50vw'}}>
+        <h3>This is Parent Component</h3>
+        <ChildComponent>
+          <p style={{ background:'white', padding: '10px'}}>
+            This is paragraph inside child which send from ParentComponent...
+          </p>
+        </ChildComponent>
+        </div>
+      )
+    }
+
+    function App() {
+      return(
+      // JSX Code here
+      <>
+      <h1>React Playground</h1>
+      <ParentComponent />
+      </>
+      )
+    }
+      ReactDOM.render(<App />, document.querySelector('#root'))
+    </script>
+  </body>
+</html>
